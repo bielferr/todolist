@@ -1,12 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 
-enum Status {
-  pendente = "pendente",
-  andamento = "andamento",
-  concluida = "concluida",
-  atrasada = "atrasada",
-}
+type Status = "pendente" | "andamento" | "concluida" | "atrasada";
 
 interface Tarefa {
   id: number;
@@ -44,7 +39,7 @@ function App() {
     const nova: Tarefa = {
       id: tarefas.length + 1,
       titulo: novoTitulo.trim(),
-      status: Status.pendente,
+      status: "pendente",
     };
     setTarefas([...tarefas, nova]);
     setNovoTitulo("");
@@ -57,9 +52,9 @@ function App() {
           ? {
               ...t,
               status:
-                t.status === Status.pendente
-                  ? Status.concluida
-                  : Status.pendente,
+                t.status === "pendente"
+                  ? "concluida"
+                  : "pendente",
             }
           : t
       )
@@ -82,10 +77,10 @@ function App() {
         return resumo;
       },
       {
-        [Status.pendente]: 0,
-        [Status.andamento]: 0,
-        [Status.concluida]: 0,
-        [Status.atrasada]: 0,
+        pendente: 0,
+        andamento: 0,
+        concluida: 0,
+        atrasada: 0,
       }
     );
   }
@@ -119,7 +114,7 @@ function App() {
           <div className="task-title" onClick={() => toggleStatus(tarefa.id)}>
             <div
               className={`circle ${
-                tarefa.status === Status.concluida ? "completed" : ""
+                tarefa.status === "concluida" ? "completed" : ""
               }`}
             />
             <span>{tarefa.titulo}</span>
@@ -132,10 +127,10 @@ function App() {
 
       <div className="resumo">
         <h3>📊 Resumo</h3>
-        <p>Pendentes: {resumo[Status.pendente]}</p>
-        <p>Concluídas: {resumo[Status.concluida]}</p>
-        <p>Em andamento: {resumo[Status.andamento]}</p>
-        <p>Atrasadas: {resumo[Status.atrasada]}</p>
+        <p>Pendentes: {resumo.pendente}</p>
+        <p>Concluídas: {resumo.concluida}</p>
+        <p>Em andamento: {resumo.andamento}</p>
+        <p>Atrasadas: {resumo.atrasada}</p>
       </div>
 
       <button className="resetar" onClick={resetarTarefas}>
