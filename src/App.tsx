@@ -17,7 +17,6 @@ const coresStatus: Record<Status, string> = {
 };
 
 function App() {
-  // Carrega estado inicial do localStorage
   const [tarefas, setTarefas] = useState<Tarefa[]>(() => {
     const salvo = localStorage.getItem("tarefas");
     return salvo ? JSON.parse(salvo) : [];
@@ -28,12 +27,10 @@ function App() {
     return localStorage.getItem("temaEscuro") === "true";
   });
 
-  // Persiste tarefas no localStorage
   useEffect(() => {
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
   }, [tarefas]);
 
-  // Persiste tema no localStorage e aplica no body
   useEffect(() => {
     localStorage.setItem("temaEscuro", String(temaEscuro));
     document.body.className = temaEscuro ? "dark-theme" : "light-theme";
@@ -91,7 +88,10 @@ function App() {
           <p>Nenhuma tarefa cadastrada</p>
         ) : (
           tarefas.map((tarefa) => (
-            <div className="card" key={tarefa.id}>
+            <div 
+              className={`card ${tarefa.status === "concluida" ? "concluida" : ""}`} 
+              key={tarefa.id}
+            >
               <div className="card-content">
                 <div className="titulo-container">
                   <span

@@ -146,3 +146,27 @@ select {
   border-radius: 20px;
   cursor: pointer ;
   }
+
+  /* Adicione estas regras ao seu arquivo CSS */
+
+.card.concluida {
+  opacity: 0.7;
+  position: relative;
+}
+
+.card.concluida .titulo-container strong {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--text-color);
+}
+
+.card.concluida .status-badge {
+  opacity: 0.6;
+}
+
+.card.concluida .card-actions select,
+.card.concluida .card-actions button {
+  opacity: 0.8;
+}
+
+/* Mantenha todas as outras regras CSS que já existiam */
