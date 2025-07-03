@@ -128,3 +128,8 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
 }
+.concluida {
+  color: gray;
+  opacity: 0.6;
+  text-decoration: line-through;
+}

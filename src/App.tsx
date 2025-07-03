@@ -51,10 +51,7 @@ function App() {
         t.id === id
           ? {
               ...t,
-              status:
-                t.status === "pendente"
-                  ? "concluida"
-                  : "pendente",
+              status: t.status === "pendente" ? "concluida" : "pendente",
             }
           : t
       )
@@ -117,7 +114,9 @@ function App() {
                 tarefa.status === "concluida" ? "completed" : ""
               }`}
             />
-            <span>{tarefa.titulo}</span>
+            <span className={tarefa.status === "concluida" ? "concluida" : ""}>
+              {tarefa.titulo}
+            </span>
           </div>
           <button className="lixeira" onClick={() => removerTarefa(tarefa.id)}>
             🗑️
