@@ -1,7 +1,7 @@
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-type Status = "pendente" | "andamento" | "concluida" | "atrasada";
+export type Status = "pendente" | "andamento" | "concluida" | "atrasada";
 
 interface Tarefa {
   id: number;
@@ -9,132 +9,78 @@ interface Tarefa {
   status: Status;
 }
 
+const coresStatus: Record<Status, string> = {
+  pendente: "#facc15",
+  andamento: "#3b82f6",
+  concluida: "#22c55e",
+  atrasada: "#ef4444",
+};
+
 function App() {
   const [tarefas, setTarefas] = useState<Tarefa[]>([]);
   const [novoTitulo, setNovoTitulo] = useState("");
   const [temaEscuro, setTemaEscuro] = useState(false);
 
-  // Carregar tarefas
-  useEffect(() => {
-    const dados = localStorage.getItem("tarefas");
-    if (dados) setTarefas(JSON.parse(dados));
+  function adicionarTarefa() {
+    if (novoTitulo.trim() === "") return;
 
-    const temaSalvo = localStorage.getItem("tema");
-    if (temaSalvo === "escuro") setTemaEscuro(true);
-  }, []);
-
-  // Salvar tarefas
-  useEffect(() => {
-    localStorage.setItem("tarefas", JSON.stringify(tarefas));
-  }, [tarefas]);
-
-  // Salvar tema
-  useEffect(() => {
-    localStorage.setItem("tema", temaEscuro ? "escuro" : "claro");
-  }, [temaEscuro]);
-
-  function addTarefa() {
-    if (!novoTitulo.trim()) return;
-
-    const nova: Tarefa = {
-      id: tarefas.length + 1,
-      titulo: novoTitulo.trim(),
+    const novaTarefa: Tarefa = {
+      id: Date.now(),
+      titulo: novoTitulo,
       status: "pendente",
     };
-    setTarefas([...tarefas, nova]);
+
+    setTarefas([...tarefas, novaTarefa]);
     setNovoTitulo("");
   }
 
-  function toggleStatus(id: number) {
-    setTarefas((prev) =>
-      prev.map((t) =>
-        t.id === id
-          ? {
-              ...t,
-              status: t.status === "pendente" ? "concluida" : "pendente",
-            }
-          : t
-      )
+  function atualizarStatus(id: number, novoStatus: Status) {
+    setTarefas(
+      tarefas.map((t) => (t.id === id ? { ...t, status: novoStatus } : t))
     );
   }
-
-  function removerTarefa(id: number) {
-    setTarefas((prev) => prev.filter((t) => t.id !== id));
-  }
-
-  function resetarTarefas() {
-    setTarefas([]);
-    localStorage.removeItem("tarefas");
-  }
-
-  function resumoTarefas() {
-    return tarefas.reduce(
-      (resumo, tarefa) => {
-        resumo[tarefa.status]++;
-        return resumo;
-      },
-      {
-        pendente: 0,
-        andamento: 0,
-        concluida: 0,
-        atrasada: 0,
-      }
-    );
-  }
-
-  const resumo = resumoTarefas();
 
   return (
-    <div className={temaEscuro ? "container dark" : "container"}>
-      <h1>To-Do List</h1>
+    <div className={`App ${temaEscuro ? "dark" : "light"}`}>
+      <h1>Todo List</h1>
 
-      <button
-        onClick={() => setTemaEscuro(!temaEscuro)}
-        className="toggle-tema"
-      >
-        {temaEscuro ? "🌞 Modo Claro" : "🌙 Modo Escuro"}
+      <button onClick={() => setTemaEscuro(!temaEscuro)} className="toggle-btn">
+        {temaEscuro ? "Tema Claro" : "Tema Escuro"}
       </button>
 
-      <div className="task-input">
+      <div className="input-container">
         <input
           type="text"
-          placeholder="Nova tarefa"
           value={novoTitulo}
           onChange={(e) => setNovoTitulo(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && addTarefa()}
+          placeholder="Nova tarefa..."
         />
-        <button onClick={addTarefa}>Adicionar</button>
+        <button onClick={adicionarTarefa}>Adicionar</button>
       </div>
 
-      {tarefas.map((tarefa) => (
-        <div key={tarefa.id} className="task-item">
-          <div className="task-title" onClick={() => toggleStatus(tarefa.id)}>
-            <div
-              className={`circle ${
-                tarefa.status === "concluida" ? "completed" : ""
-              }`}
-            />
-            <span className={tarefa.status === "concluida" ? "concluida" : ""}>
-              {tarefa.titulo}
-            </span>
+      <div className="tarefas-container">
+        {tarefas.map((tarefa) => (
+          <div className="card" key={tarefa.id}>
+            <div className="titulo-container">
+              <span
+                className="status-badge"
+                style={{ backgroundColor: coresStatus[tarefa.status] }}
+              ></span>
+              <strong>{tarefa.titulo}</strong>
+            </div>
+
+            <select
+              value={tarefa.status}
+              onChange={(e) => atualizarStatus(tarefa.id, e.target.value as Status)}
+            >
+              <option value="pendente">Pendente</option>
+              <option value="andamento">Em andamento</option>
+              <option value="concluida">Concluída</option>
+              <option value="atrasada">Atrasada</option>
+            </select>
           </div>
-          <button className="lixeira" onClick={() => removerTarefa(tarefa.id)}>
-            🗑️
-          </button>
-        </div>
-      ))}
-
-      <div className="resumo">
-        <h3>📊 Resumo</h3>
-        <p>Pendentes: {resumo.pendente}</p>
-        <p>Concluídas: {resumo.concluida}</p>
-        <p>Em andamento: {resumo.andamento}</p>
-        <p>Atrasadas: {resumo.atrasada}</p>
+        ))}
       </div>
-
-      <button className="resetar" onClick={resetarTarefas}>
-        Resetar Tarefas
-      </button>
     </div>
   );
 }
