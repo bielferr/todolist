@@ -147,7 +147,6 @@ select {
   cursor: pointer ;
   }
 
-  /* Adicione estas regras ao seu arquivo CSS */
 
 .card.concluida {
   opacity: 0.7;
@@ -169,4 +168,3 @@ select {
   opacity: 0.8;
 }
 
-/* Mantenha todas as outras regras CSS que já existiam */
