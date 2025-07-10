@@ -188,7 +188,7 @@ progresso-container {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  color:#;
+  color:white;
   font-weight: bold;
   line-height: 25px;
 }
