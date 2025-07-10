@@ -168,7 +168,7 @@ select {
   opacity: 0.8;
 }
 
-progresso-container {
+.progresso-container {
   margin-top: 20px;
   background-color: #e5e7eb; /* cinza claro */
   border-radius: 8px;
