@@ -168,3 +168,27 @@ select {
   opacity: 0.8;
 }
 
+progresso-container {
+  margin-top: 20px;
+  background-color: #e5e7eb; /* cinza claro */
+  border-radius: 8px;
+  overflow: hidden;
+  height: 25px;
+  position: relative;
+}
+
+.progresso-bar {
+  background-color: #22c55e; /* verde */
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progresso-container span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  color:#;
+  font-weight: bold;
+  line-height: 25px;
+}

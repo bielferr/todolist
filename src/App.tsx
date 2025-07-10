@@ -21,7 +21,7 @@ function App() {
     const salvo = localStorage.getItem("tarefas");
     return salvo ? JSON.parse(salvo) : [];
   });
-  
+
   const [novoTitulo, setNovoTitulo] = useState("");
   const [temaEscuro, setTemaEscuro] = useState(() => {
     return localStorage.getItem("temaEscuro") === "true";
@@ -38,32 +38,32 @@ function App() {
 
   function adicionarTarefa() {
     if (novoTitulo.trim() === "") return;
-    
+
     const novaTarefa: Tarefa = {
       id: Date.now(),
       titulo: novoTitulo,
       status: "pendente",
     };
-    
+
     setTarefas([...tarefas, novaTarefa]);
     setNovoTitulo("");
   }
 
   function atualizarStatus(id: number, novoStatus: Status) {
-    setTarefas(tarefas.map(t =>
-      t.id === id ? { ...t, status: novoStatus } : t
-    ));
+    setTarefas(
+      tarefas.map((t) => (t.id === id ? { ...t, status: novoStatus } : t))
+    );
   }
 
   function removerTarefa(id: number) {
-    setTarefas(tarefas.filter(t => t.id !== id));
+    setTarefas(tarefas.filter((t) => t.id !== id));
   }
 
   return (
     <div className={`App ${temaEscuro ? "dark" : "light"}`}>
       <div className="header">
         <h1>Todo List</h1>
-        <button 
+        <button
           onClick={() => setTemaEscuro(!temaEscuro)}
           className="tema-toggle"
           aria-label={`Alternar para tema ${temaEscuro ? "claro" : "escuro"}`}
@@ -78,7 +78,7 @@ function App() {
           value={novoTitulo}
           onChange={(e) => setNovoTitulo(e.target.value)}
           placeholder="Nova tarefa..."
-          onKeyPress={(e) => e.key === "Enter" && adicionarTarefa()}
+          onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
         />
         <button onClick={adicionarTarefa}>Adicionar</button>
       </div>
@@ -88,8 +88,10 @@ function App() {
           <p>Nenhuma tarefa cadastrada</p>
         ) : (
           tarefas.map((tarefa) => (
-            <div 
-              className={`card ${tarefa.status === "concluida" ? "concluida" : ""}`} 
+            <div
+              className={`card ${
+                tarefa.status === "concluida" ? "concluida" : ""
+              }`}
               key={tarefa.id}
             >
               <div className="card-content">
@@ -103,14 +105,16 @@ function App() {
                 <div className="card-actions">
                   <select
                     value={tarefa.status}
-                    onChange={(e) => atualizarStatus(tarefa.id, e.target.value as Status)}
+                    onChange={(e) =>
+                      atualizarStatus(tarefa.id, e.target.value as Status)
+                    }
                   >
                     <option value="pendente">Pendente</option>
                     <option value="andamento">Em andamento</option>
                     <option value="concluida">Concluída</option>
                     <option value="atrasada">Atrasada</option>
                   </select>
-                  <button 
+                  <button
                     onClick={() => removerTarefa(tarefa.id)}
                     className="remove-btn"
                   >
@@ -122,6 +126,20 @@ function App() {
           ))
         )}
       </div>
+      {/* Progresso */}
+      {tarefas.length > 0 && (
+        (() => {
+          const total = tarefas.length;
+          const concluidas = tarefas.filter(t => t.status === "concluida").length;
+          const progresso = Math.round((concluidas / total) * 100);
+          return (
+            <div className="progresso-container">
+              <div className="progresso-bar" style={{ width: `${progresso}%` }}></div>
+              <span>{progresso}% concluído</span>
+            </div>
+          );
+        })()
+      )}
     </div>
   );
 }
