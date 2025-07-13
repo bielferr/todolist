@@ -1,4 +1,3 @@
-/* Variáveis de tema */
 :root {
   --bg-color: #ffffff;
   --text-color: #333333;
@@ -18,20 +17,26 @@
   --button-bg: #1d4ed8;
 }
 
-/* Estilos base */
 body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 20px;
   transition: all 0.3s ease;
 }
 
 .App {
+  width: 100%;
   max-width: 600px;
-  margin: 0 auto;
+  background-color: var(--card-bg);
   padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header {
@@ -41,19 +46,15 @@ body {
   margin-bottom: 20px;
 }
 
-h1 {
-  margin: 0;
-}
-
-/* Input */
 .input-container {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
 input {
-  flex: 1;
+  flex: 1 1 auto;
   padding: 10px;
   border: 1px solid var(--input-border);
   border-radius: 4px;
@@ -75,27 +76,6 @@ button:hover {
   opacity: 0.9;
 }
 
-/* Botão circular ao lado do Adicionar */
-.marcar-todas-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: #22c55e;
-  color: white;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s;
-}
-
-.marcar-todas-btn:hover {
-  background-color: #16a34a;
-}
-
-/* Lista de tarefas */
 .tarefas-container {
   display: flex;
   flex-direction: column;
@@ -132,12 +112,6 @@ button:hover {
   border-radius: 50%;
 }
 
-.card-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 select {
   padding: 5px;
   border-radius: 4px;
@@ -157,7 +131,6 @@ select {
   color: #ef4444;
 }
 
-/* Toggle de tema */
 .tema-toggle {
   background: none;
   border: 1px solid var(--text-color);
@@ -169,27 +142,15 @@ select {
 
 .card.concluida {
   opacity: 0.7;
-  position: relative;
 }
 
 .card.concluida .titulo-container strong {
   text-decoration: line-through;
-  text-decoration-thickness: 2px;
-  text-decoration-color: var(--text-color);
-}
-
-.card.concluida .status-badge {
-  opacity: 0.6;
-}
-
-.card.concluida .card-actions select,
-.card.concluida .card-actions button {
-  opacity: 0.8;
 }
 
 .progresso-container {
   margin-top: 20px;
-  background-color: #e5e7eb; /* cinza claro */
+  background-color: #e5e7eb;
   border-radius: 8px;
   overflow: hidden;
   height: 25px;
@@ -197,7 +158,7 @@ select {
 }
 
 .progresso-bar {
-  background-color: #22c55e; /* verde */
+  background-color: #22c55e;
   height: 100%;
   transition: width 0.3s ease;
 }
@@ -211,52 +172,54 @@ select {
   font-weight: bold;
   line-height: 25px;
 }
-.congratulations-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+.marcar-todas-btn {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 50%;
   background-color: #22c55e;
   color: white;
-  padding: 20px 30px;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  z-index: 999;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+.marcar-todas-btn:hover {
+  background-color: #16a34a;
+}
+
 .congratulations-message {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: #22c55e;
   color: white;
-  padding: 20px 30px 20px 20px;
-  border-radius: 12px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  z-index: 999;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  padding: 10px;
+  border-radius: 8px;
   text-align: center;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  margin-bottom: 15px;
+  position: relative;
 }
 
 .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
   background: transparent;
   border: none;
   color: white;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.2rem;
   cursor: pointer;
-  padding: 0;
-  line-height: 1;
-  transition: color 0.2s;
 }
 
-.close-btn:hover {
-  color: #a3f7a3;
+/* Responsivo para celular */
+@media (max-width: 480px) {
+  .App {
+    padding: 15px;
+  }
+
+  input {
+    flex: 1 1 100%;
+  }
+
+  button {
+    flex: 1 1 100%;
+  }
 }
