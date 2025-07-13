@@ -241,46 +241,108 @@ select {
   cursor: pointer;
 }
 
-/* Responsividade */
+/* Media Queries para Celular - Adicionar ao final do seu CSS existente */
 @media (max-width: 480px) {
   body {
-    padding: 15px 10px;
+    padding: 10px;
+    align-items: flex-start; /* Alinha o conteúdo no topo */
+    min-height: 100vh;
   }
 
   .App {
     width: 100%;
     padding: 15px;
+    max-width: none;
+    margin-top: 10px;
   }
 
+  /* Header ajustado para mobile */
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  /* Container de inputs otimizado para mobile */
   .input-container {
     flex-direction: column;
+    gap: 12px;
   }
 
+  .input-container input {
+    width: 100%;
+    padding: 12px; /* Área de toque maior */
+    font-size: 16px; /* Evita zoom automático no iOS */
+  }
+
+  /* Grupo de botões ajustado */
   .button-group {
     width: 100%;
+    display: flex;
+    gap: 10px;
   }
 
   .adicionar-btn,
   .tema-toggle {
-    width: 100%;
+    flex: 1;
+    padding: 12px; /* Mais fácil para tocar */
+    font-size: 1rem;
   }
 
+  /* Botão marcar todas */
   .marcar-todas-btn {
-    align-self: flex-end;
+    width: 44px; /* Tamanho maior para toque */
+    height: 44px;
+    align-self: flex-end; /* Alinha à direita */
+    margin-top: 5px;
+  }
+
+  /* Cards de tarefa otimizados */
+  .card {
+    padding: 12px;
   }
 
   .card-content {
     flex-direction: column;
     align-items: flex-start;
+    gap: 12px;
   }
 
   .card-actions {
     width: 100%;
     justify-content: space-between;
-    margin-top: 10px;
   }
 
   select {
+    width: 80%; /* Mais espaço para interação */
+    padding: 10px;
+  }
+
+  /* Barra de progresso */
+  .progresso-container {
+    margin-top: 25px;
+  }
+
+  /* Mensagem de congratulações */
+  .congratulations-message {
+    padding: 12px 8px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Ajustes extras para telas muito pequenas */
+@media (max-width: 350px) {
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .adicionar-btn,
+  .tema-toggle {
     width: 100%;
+  }
+
+  select {
+    width: 70%;
   }
 }
