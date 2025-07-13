@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh; /* Centraliza verticalmente na tela inteira */
   margin: 0;
   padding: 20px;
   background-color: var(--bg-color);
@@ -32,7 +32,7 @@ body {
 
 .App {
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   background-color: var(--card-bg);
   padding: 20px;
   border-radius: 12px;
@@ -48,17 +48,38 @@ body {
 
 .input-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-input {
+.input-container input {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.input-container button.adicionar-btn {
   flex: 1 1 auto;
-  padding: 10px;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
-  background-color: var(--input-bg);
-  color: var(--text-color);
+}
+
+.input-container .marcar-todas-btn {
+  flex: 0 0 auto;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 1rem;
+  background-color: #22c55e;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.input-container .marcar-todas-btn:hover {
+  background-color: #16a34a;
 }
 
 button {
@@ -172,26 +193,6 @@ select {
   line-height: 25px;
 }
 
-.marcar-todas-btn {
-  padding: 6px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 50%;
-  background-color: #22c55e;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.marcar-todas-btn:hover {
-  background-color: #16a34a;
-}
-
 .congratulations-message {
   background-color: #22c55e;
   color: white;
@@ -212,21 +213,49 @@ select {
   font-size: 1.2rem;
   cursor: pointer;
 }
+@media (max-width: 600px) {
+  .App {
+    width: 100%;
+    padding: 15px;
+  }
 
-@media (max-width: 480px) {
   .input-container {
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
-  .input-container input {
-    flex: 1 1 100%;
+  .input-container input,
+  .input-container button.adicionar-btn {
+    width: 100%;
   }
 
-  .input-container button:not(.marcar-todas-btn) {
-    flex: 1 1 100%;
+  .input-container .marcar-todas-btn {
+    width: 100%;
+    margin-top: 10px;
   }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);  
+  }
+}
 
-  .marcar-todas-btn {
-    flex: 0 0 auto;
-  }
+/* Garante que o botão .marcar-todas-btn fique circular em todos os tamanhos */
+.input-container .marcar-todas-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  font-size: 1rem;
+  background-color: #22c55e;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.input-container .marcar-todas-btn:hover {
+  background-color: #16a34a;
 }
