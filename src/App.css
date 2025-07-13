@@ -209,17 +209,23 @@ select {
   cursor: pointer;
 }
 
-/* Responsivo para celular */
 @media (max-width: 480px) {
-  .App {
-    padding: 15px;
-  }
-
-  input {
+  .input-container input {
     flex: 1 1 100%;
   }
 
-  button {
+  .input-container button:not(.marcar-todas-btn) {
     flex: 1 1 100%;
+  }
+
+  .marcar-todas-btn {
+    flex: 0 0 auto;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
