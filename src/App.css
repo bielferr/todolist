@@ -17,28 +17,21 @@
   --button-bg: #1d4ed8;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
+  align-items: center;
+  height: 100vh; /* Centraliza verticalmente na tela inteira */
   margin: 0;
   padding: 20px;
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   transition: all 0.3s ease;
-  line-height: 1.5;
 }
 
 .App {
-  width: 90%;
+  width: 100%;
   max-width: 400px;
   background-color: var(--card-bg);
   padding: 20px;
@@ -46,22 +39,13 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Cabeçalho */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
-.header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-/* Container de inputs */
 .input-container {
   display: flex;
   flex-wrap: wrap;
@@ -70,74 +54,59 @@ body {
 }
 
 .input-container input {
-  flex: 1 1 150px;
+  flex: 1 1 0;
   min-width: 0;
-  padding: 12px;
-  border: 1px solid var(--input-border);
-  border-radius: 6px;
-  background-color: var(--input-bg);
-  color: var(--text-color);
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
-.input-container input:focus {
-  outline: none;
-  border-color: var(--button-bg);
 }
 
 .input-container button.adicionar-btn {
-  flex: 1 1 100px;
-  min-width: 90px;
-  padding: 12px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
-}
-
-.input-container button.adicionar-btn:hover {
-  opacity: 0.9;
+  flex: 1 1 auto;
 }
 
 .input-container .marcar-todas-btn {
-  flex: 0 0 44px;
-  width: 44px;
-  height: 44px;
+  flex: 0 0 auto;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
   background-color: #22c55e;
   color: white;
   cursor: pointer;
   transition: background-color 0.3s;
-  border: none;
 }
 
 .input-container .marcar-todas-btn:hover {
   background-color: #16a34a;
 }
 
-/* Container de tarefas */
+button {
+  padding: 10px 15px;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
 .tarefas-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* Cards de tarefa */
 .card {
   background-color: var(--card-bg);
   border-radius: 8px;
   padding: 15px;
-  transition: transform 0.2s, opacity 0.3s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
 }
 
 .card:hover {
@@ -148,21 +117,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 .titulo-container {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1 1 200px;
-  min-width: 0;
-}
-
-.titulo-container strong {
-  font-weight: 500;
-  word-break: break-word;
 }
 
 .status-badge {
@@ -170,63 +130,36 @@ body {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: #3b82f6;
 }
 
-/* Dropdown de status */
 select {
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 5px;
+  border-radius: 4px;
   background-color: var(--input-bg);
   color: var(--text-color);
   border: 1px solid var(--input-border);
-  font-size: 0.95rem;
-  cursor: pointer;
 }
 
-select:focus {
-  outline: none;
-  border-color: var(--button-bg);
-}
-
-/* Botão de remover */
 .remove-btn {
   background-color: transparent;
   color: var(--text-color);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   padding: 0 5px;
-  cursor: pointer;
-  border: none;
-  transition: color 0.2s;
 }
 
 .remove-btn:hover {
   color: #ef4444;
 }
 
-/* Botão de tema */
 .tema-toggle {
   background: none;
   border: 1px solid var(--text-color);
   color: var(--text-color);
-  padding: 8px 16px;
+  padding: 5px 10px;
   border-radius: 20px;
   cursor: pointer;
-  font-size: 0.95rem;
-  margin-top: 20px;
-  align-self: center;
-  transition: all 0.3s;
 }
 
-.tema-toggle:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.dark-theme .tema-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Tarefa concluída */
 .card.concluida {
   opacity: 0.7;
 }
@@ -235,11 +168,6 @@ select:focus {
   text-decoration: line-through;
 }
 
-.card.concluida .status-badge {
-  background-color: #22c55e;
-}
-
-/* Barra de progresso */
 .progresso-container {
   margin-top: 20px;
   background-color: #e5e7eb;
@@ -263,24 +191,16 @@ select:focus {
   color: #000;
   font-weight: bold;
   line-height: 25px;
-  font-size: 0.9rem;
 }
 
-.dark-theme .progresso-container span {
-  color: #fff;
-}
-
-/* Mensagem de parabéns */
 .congratulations-message {
   background-color: #22c55e;
   color: white;
-  padding: 12px;
+  padding: 10px;
   border-radius: 8px;
   text-align: center;
   margin-bottom: 15px;
   position: relative;
-  font-size: 1rem;
-  animation: fadeIn 0.5s;
 }
 
 .close-btn {
@@ -290,101 +210,26 @@ select:focus {
   background: transparent;
   border: none;
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   cursor: pointer;
-  line-height: 1;
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Media Queries para responsividade */
-@media (max-width: 480px) {
-  body {
-    padding: 10px;
-    align-items: flex-start;
-  }
-
+@media (max-width: 600px) {
   .App {
     width: 100%;
     padding: 15px;
-    margin-top: 10px;
-    max-width: none;
-  }
-
-  .header {
-    flex-direction: row;
-    gap: 8px;
-    margin-bottom: 15px;
-  }
-
-  .header h1 {
-    font-size: 1.3rem;
   }
 
   .input-container {
-    gap: 8px;
-    margin-bottom: 15px;
-  }
-
-  .input-container input {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px;
-  font-size: 16px; /* Evita zoom automático no iOS */
-  }
-
-  .input-container button.adicionar-btn {
-    flex: 0 0 auto;
-    padding: 12px 15px;
-  }
-
-  .card {
-    padding: 12px;
-  }
-
-  .card-content {
-    gap: 8px;
-  }
-
-  select {
-    padding: 10px;
-    font-size: 16px; /* Melhora legibilidade em mobile */
-  }
-
-  .tema-toggle {
-    padding: 10px 15px;
-    margin-top: 15px;
-  }
-}
-
-@media (max-width: 350px) {
-  .input-container {
-    flex-wrap: wrap;
-  }
-  
-  .input-container input {
-    min-width: 100%;
-  }
-  
-  .input-container button.adicionar-btn {
-    flex: 1;
-    min-width: 100%;
-  }
-  
-  .input-container .marcar-todas-btn {
-    order: 1;
-    margin-left: auto;
-  }
-
-  .card-content {
     flex-direction: column;
-    align-items: flex-start;
   }
 
-  select {
+  .input-container input,
+  .input-container button.adicionar-btn {
     width: 100%;
+  }
+
+  .input-container .marcar-todas-btn {
+    width: 100%;
+    margin-top: 10px;
   }
 }
