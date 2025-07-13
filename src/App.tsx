@@ -1,5 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import Confetti from 'react-confetti';
+import { useWindowSize } from '@react-hook/window-size';
 
 type Status = "pendente" | "andamento" | "concluida" | "atrasada";
 
@@ -27,6 +29,10 @@ function App() {
     return localStorage.getItem("temaEscuro") === "true";
   });
 
+  const [width, height] = useWindowSize();
+
+  const [showCongrats, setShowCongrats] = useState(true);
+
   useEffect(() => {
     localStorage.setItem("tarefas", JSON.stringify(tarefas));
   }, [tarefas]);
@@ -35,6 +41,15 @@ function App() {
     localStorage.setItem("temaEscuro", String(temaEscuro));
     document.body.className = temaEscuro ? "dark-theme" : "light-theme";
   }, [temaEscuro]);
+
+  // Resetar o showCongrats sempre que tarefas mudarem e todas forem concluídas
+  useEffect(() => {
+    if (tarefas.length > 0 && tarefas.every(t => t.status === "concluida")) {
+      setShowCongrats(true);
+    } else {
+      setShowCongrats(false);
+    }
+  }, [tarefas]);
 
   function adicionarTarefa() {
     if (novoTitulo.trim() === "") return;
@@ -59,8 +74,29 @@ function App() {
     setTarefas(tarefas.filter((t) => t.id !== id));
   }
 
+  function marcarTodasComoConcluidas() {
+    const atualizadas = tarefas.map(t => ({ ...t, status: "concluida" }));
+    setTarefas(atualizadas);
+  }
+
+  const todasConcluidas = tarefas.length > 0 && tarefas.every(t => t.status === "concluida");
+
   return (
     <div className={`App ${temaEscuro ? "dark" : "light"}`}>
+      {todasConcluidas && showCongrats && <Confetti width={width} height={height} />}
+      {todasConcluidas && showCongrats && (
+        <div className="congratulations-message">
+          🎉 Congratulations! Todas as tarefas foram concluídas! 🎉
+          <button 
+            className="close-btn" 
+            aria-label="Fechar mensagem" 
+            onClick={() => setShowCongrats(false)}
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       <div className="header">
         <h1>Todo List</h1>
         <button
@@ -81,6 +117,15 @@ function App() {
           onKeyDown={(e) => e.key === "Enter" && adicionarTarefa()}
         />
         <button onClick={adicionarTarefa}>Adicionar</button>
+        {tarefas.length > 0 && (
+          <button
+            onClick={marcarTodasComoConcluidas}
+            className="marcar-todas-btn"
+            title="Marcar todas como concluídas"
+          >
+            ✔️
+          </button>
+        )}
       </div>
 
       <div className="tarefas-container">
@@ -89,9 +134,7 @@ function App() {
         ) : (
           tarefas.map((tarefa) => (
             <div
-              className={`card ${
-                tarefa.status === "concluida" ? "concluida" : ""
-              }`}
+              className={`card ${tarefa.status === "concluida" ? "concluida" : ""}`}
               key={tarefa.id}
             >
               <div className="card-content">
@@ -126,20 +169,18 @@ function App() {
           ))
         )}
       </div>
-      {/* Progresso */}
-      {tarefas.length > 0 && (
-        (() => {
-          const total = tarefas.length;
-          const concluidas = tarefas.filter(t => t.status === "concluida").length;
-          const progresso = Math.round((concluidas / total) * 100);
-          return (
-            <div className="progresso-container">
-              <div className="progresso-bar" style={{ width: `${progresso}%` }}></div>
-              <span>{progresso}% concluído</span>
-            </div>
-          );
-        })()
-      )}
+
+      {tarefas.length > 0 && (() => {
+        const total = tarefas.length;
+        const concluidas = tarefas.filter(t => t.status === "concluida").length;
+        const progresso = Math.round((concluidas / total) * 100);
+        return (
+          <div className="progresso-container">
+            <div className="progresso-bar" style={{ width: `${progresso}%` }}></div>
+            <span>{progresso}% concluído</span>
+          </div>
+        );
+      })()}
     </div>
   );
 }

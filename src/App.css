@@ -48,7 +48,7 @@ h1 {
 /* Input */
 .input-container {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
@@ -73,6 +73,26 @@ button {
 
 button:hover {
   opacity: 0.9;
+}
+
+/* Botão circular ao lado do Adicionar */
+.marcar-todas-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #22c55e;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.marcar-todas-btn:hover {
+  background-color: #16a34a;
 }
 
 /* Lista de tarefas */
@@ -144,9 +164,8 @@ select {
   color: var(--text-color);
   padding: 5px 10px;
   border-radius: 20px;
-  cursor: pointer ;
-  }
-
+  cursor: pointer;
+}
 
 .card.concluida {
   opacity: 0.7;
@@ -188,7 +207,56 @@ select {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  color: #000; ;
+  color: #000;
   font-weight: bold;
   line-height: 25px;
+}
+.congratulations-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #22c55e;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  text-align: center;
+}
+.congratulations-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #22c55e;
+  color: white;
+  padding: 20px 30px 20px 20px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  z-index: 999;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #a3f7a3;
 }
