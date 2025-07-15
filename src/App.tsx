@@ -110,7 +110,7 @@ function App() {
   }
 
   function marcarTodasComoConcluidas() {
-    const atualizadas = tarefas.map((t) => ({ ...t, status: "concluida" }));
+    const atualizadas = tarefas.map((t) => ({ ...t, status: "concluida" as Status }));
     setTarefas(atualizadas);
   }
 
