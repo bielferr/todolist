@@ -10,7 +10,6 @@ interface Tarefa {
   id: number;
   titulo: string;
   status: Status;
-  isToday: boolean; // nova propriedade
 }
 
 const coresStatus: Record<Status, string> = {
@@ -41,21 +40,17 @@ function carregarTarefasDoLocalStorage(): Tarefa[] {
       id: number;
       titulo: string;
       status: unknown;
-      isToday?: boolean;
     };
 
     const tarefasValidadas = (parsed as ParsedTarefa[])
       .filter(
         (obj): obj is ParsedTarefa =>
-          obj &&
-          typeof obj.id === "number" &&
-          typeof obj.titulo === "string"
+          obj && typeof obj.id === "number" && typeof obj.titulo === "string"
       )
       .map((obj) => ({
         id: obj.id,
         titulo: obj.titulo,
         status: converterStatus(obj.status),
-        isToday: typeof obj.isToday === "boolean" ? obj.isToday : false,
       }));
 
     return tarefasValidadas;
@@ -66,14 +61,12 @@ function carregarTarefasDoLocalStorage(): Tarefa[] {
 
 function App() {
   const [tarefas, setTarefas] = useState<Tarefa[]>(carregarTarefasDoLocalStorage);
-
   const [novoTitulo, setNovoTitulo] = useState("");
   const [temaEscuro, setTemaEscuro] = useState(() => {
     return localStorage.getItem("temaEscuro") === "true";
   });
 
   const [width, height] = useWindowSize();
-
   const [showCongrats, setShowCongrats] = useState(true);
 
   useEffect(() => {
@@ -100,7 +93,6 @@ function App() {
       id: Date.now(),
       titulo: novoTitulo,
       status: "pendente",
-      isToday: false,
     };
 
     setTarefas([...tarefas, novaTarefa]);
@@ -118,14 +110,8 @@ function App() {
   }
 
   function marcarTodasComoConcluidas() {
-    const atualizadas = tarefas.map((t) => ({ ...t, status: "concluida" as Status }));
+    const atualizadas = tarefas.map((t) => ({ ...t, status: "concluida" }));
     setTarefas(atualizadas);
-  }
-
-  function toggleIsToday(id: number) {
-    setTarefas(
-      tarefas.map((t) => (t.id === id ? { ...t, isToday: !t.isToday } : t))
-    );
   }
 
   const todasConcluidas =
@@ -197,12 +183,6 @@ function App() {
                 className="card-content"
                 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
               >
-                <input
-                  type="checkbox"
-                  checked={tarefa.isToday}
-                  onChange={() => toggleIsToday(tarefa.id)}
-                  title="Marcar como tarefa do dia"
-                />
                 <div className="titulo-container" style={{ flex: 1 }}>
                   <span
                     className="status-badge"
@@ -232,30 +212,6 @@ function App() {
               </div>
             </div>
           ))
-        )}
-      </div>
-
-      {/* Seção Tarefas do Dia */}
-      <div className="tarefas-do-dia-container" style={{ marginTop: "2rem" }}>
-        <h2>Tarefas do Dia</h2>
-        {tarefas.filter(t => t.isToday).length === 0 ? (
-          <p>Nenhuma tarefa marcada para hoje.</p>
-        ) : (
-          tarefas
-            .filter(t => t.isToday)
-            .map(tarefa => (
-              <div
-                key={tarefa.id}
-                className={`card ${tarefa.status === "concluida" ? "concluida" : ""}`}
-                style={{ marginBottom: "0.5rem" }}
-              >
-                <div className="card-content">
-                  <div className="titulo-container">
-                    <strong>{tarefa.titulo}</strong>
-                  </div>
-                </div>
-              </div>
-            ))
         )}
       </div>
 
