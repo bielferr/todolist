@@ -27,7 +27,12 @@ function carregarTarefasDoLocalStorage(): Tarefa[] {
     const parsed = JSON.parse(salvo);
     if (!Array.isArray(parsed)) return [];
 
-    const statusesValidos = ["pendente", "andamento", "concluida", "atrasada"] as const;
+    const statusesValidos = [
+      "pendente",
+      "andamento",
+      "concluida",
+      "atrasada",
+    ] as const;
 
     function converterStatus(status: unknown): Status {
       if (statusesValidos.includes(status as Status)) {
@@ -60,7 +65,9 @@ function carregarTarefasDoLocalStorage(): Tarefa[] {
 }
 
 function App() {
-  const [tarefas, setTarefas] = useState<Tarefa[]>(carregarTarefasDoLocalStorage);
+  const [tarefas, setTarefas] = useState<Tarefa[]>(
+    carregarTarefasDoLocalStorage
+  );
   const [novoTitulo, setNovoTitulo] = useState("");
   const [temaEscuro, setTemaEscuro] = useState(() => {
     return localStorage.getItem("temaEscuro") === "true";
@@ -110,7 +117,10 @@ function App() {
   }
 
   function marcarTodasComoConcluidas() {
-    const atualizadas = tarefas.map((t) => ({ ...t, status: "concluida" as Status }));
+    const atualizadas = tarefas.map((t) => ({
+      ...t,
+      status: "concluida" as Status,
+    }));
     setTarefas(atualizadas);
   }
 
@@ -176,7 +186,9 @@ function App() {
         ) : (
           tarefas.map((tarefa) => (
             <div
-              className={`card ${tarefa.status === "concluida" ? "concluida" : ""}`}
+              className={`card ${
+                tarefa.status === "concluida" ? "concluida" : ""
+              }`}
               key={tarefa.id}
             >
               <div
@@ -218,11 +230,16 @@ function App() {
       {tarefas.length > 0 &&
         (() => {
           const total = tarefas.length;
-          const concluidas = tarefas.filter((t) => t.status === "concluida").length;
+          const concluidas = tarefas.filter(
+            (t) => t.status === "concluida"
+          ).length;
           const progresso = Math.round((concluidas / total) * 100);
           return (
             <div className="progresso-container">
-              <div className="progresso-bar" style={{ width: `${progresso}%` }}></div>
+              <div
+                className="progresso-bar"
+                style={{ width: `${progresso}%` }}
+              ></div>
               <span>{progresso}% concluído</span>
             </div>
           );
